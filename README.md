@@ -1,6 +1,6 @@
-# Daily job digest (resume-aligned)
+# Job-sender-bot
 
-Fetches listings via the **Adzuna** API (official developer keys), ranks them with simple **keyword overlap** against your résumé text, and emails an HTML digest.
+Daily job digest (resume-aligned): fetches listings via the **Adzuna** API (official developer keys), ranks them with simple **keyword overlap** against your résumé text, and emails an HTML digest.
 
 This is not résumé-aware ML—just transparent matching you can tune by editing your pasted résumé and search queries.
 
