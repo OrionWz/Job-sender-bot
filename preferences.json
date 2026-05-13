@@ -1,0 +1,17 @@
+{
+  "country_code": "us",
+  "max_jobs_in_email": 20,
+  "salary_min_usd": null,
+  "queries": [
+    {
+      "label": "Remote tech / help desk",
+      "what": "help desk remote",
+      "where": ""
+    },
+    {
+      "label": "On-site dealership / detail (change city)",
+      "what": "automotive detailer dealership",
+      "where": "Your City, Your State"
+    }
+  ]
+}

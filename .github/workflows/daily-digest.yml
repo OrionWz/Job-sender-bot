@@ -1,0 +1,58 @@
+name: Daily job digest
+
+on:
+  schedule:
+    # 13:00 UTC ≈ morning US — adjust as you like
+    - cron: "0 13 * * *"
+  workflow_dispatch:
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: pip install -r requirements.txt
+
+      - name: Write preferences from secret (optional)
+        env:
+          PREFERENCES_JSON: ${{ secrets.PREFERENCES_JSON }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          raw = os.environ.get("PREFERENCES_JSON", "").strip()
+          if raw:
+              Path("preferences.json").write_text(raw, encoding="utf-8")
+          PY
+
+      - name: Write resume from secret (optional)
+        env:
+          RESUME_TEXT: ${{ secrets.RESUME_TEXT }}
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          t = os.environ.get("RESUME_TEXT", "")
+          path = Path("profile/resume_text.txt")
+          if t.strip():
+              path.parent.mkdir(parents=True, exist_ok=True)
+              path.write_text(t, encoding="utf-8")
+          PY
+
+      - name: Run digest
+        env:
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          DIGEST_TO: ${{ secrets.DIGEST_TO }}
+        run: python -m src.main

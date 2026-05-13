@@ -1,0 +1,4 @@
+Paste your full resume here as plain text (export from PDF or copy-paste).
+Rename this file to resume_text.txt (see README).
+
+The matcher tokenizes this text and ranks job postings by keyword overlap with title + description.

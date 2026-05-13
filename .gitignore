@@ -1,0 +1,5 @@
+.env
+profile/resume_text.txt
+__pycache__/
+*.pyc
+.venv/
